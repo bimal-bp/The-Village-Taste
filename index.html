@@ -40,6 +40,9 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             border-left: 4px solid #3498db;
         }
+        .kpi-box.ytd {
+            border-left-color: #e74c3c;
+        }
         .kpi-box h3 {
             margin-top: 0;
             color: #7f8c8d;
@@ -106,6 +109,75 @@
             background-color: #ecf0f1;
             margin: 20px 0;
         }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #2980b9;
+        }
+        .consumption-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .consumption-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .consumption-item h3 {
+            margin-top: 0;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .consumption-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .consumption-label {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+        .customer-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .customer-box h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .customer-list {
+            display: flex;
+            gap: 20px;
+        }
+        .customer-item {
+            text-align: center;
+        }
+        .customer-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .customer-name {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +187,12 @@
             <input type="date" id="date-selector">
             <button onclick="loadData()">Load Data</button>
         </div>
+    </div>
+
+    <div class="button-container">
+        <button onclick="showVRMData()">VRM - 2374.1 MT</button>
+        <button onclick="showDryerData()">DRYER - 2442 MT</button>
+        <button onclick="showDispatchData()">DISPATCH - 2104 MT</button>
     </div>
 
     <h2 class="section-title">Key Performance Indicators</h2>
@@ -133,6 +211,55 @@
             <h3>Dispatch Quantity</h3>
             <div class="kpi-value">734.96 MT</div>
             <div class="kpi-label">Total Week Dispatch</div>
+        </div>
+    </div>
+
+    <div class="kpi-container">
+        <div class="kpi-box ytd">
+            <h3>VRM Production (YTD)</h3>
+            <div class="kpi-value">2374.1 MT</div>
+            <div class="kpi-label">Year-to-Date Total</div>
+        </div>
+        <div class="kpi-box ytd">
+            <h3>Dryer Production (YTD)</h3>
+            <div class="kpi-value">2442 MT</div>
+            <div class="kpi-label">Year-to-Date Total</div>
+        </div>
+        <div class="kpi-box ytd">
+            <h3>Dispatch Quantity (YTD)</h3>
+            <div class="kpi-value">2104 MT</div>
+            <div class="kpi-label">Year-to-Date Total</div>
+        </div>
+    </div>
+
+    <div class="customer-box">
+        <h3>Customer-wise Dispatch</h3>
+        <div class="customer-list">
+            <div class="customer-item">
+                <div class="customer-count">21</div>
+                <div class="customer-name">TALEGAON</div>
+            </div>
+            <div class="customer-item">
+                <div class="customer-count">1</div>
+                <div class="customer-name">ULTRATECH</div>
+            </div>
+            <div class="customer-item">
+                <div class="customer-count">2</div>
+                <div class="customer-name">TALOJA</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="consumption-box">
+        <div class="consumption-item" style="border-left: 4px solid #f39c12;">
+            <h3>Total JCB Diesel Consumption</h3>
+            <div class="consumption-value">300 Ltrs</div>
+            <div class="consumption-label">Week Total</div>
+        </div>
+        <div class="consumption-item" style="border-left: 4px solid #9b59b6;">
+            <h3>Total LDO Consumption</h3>
+            <div class="consumption-value">1145 Ltrs</div>
+            <div class="consumption-label">Week Total</div>
         </div>
     </div>
 
@@ -201,12 +328,6 @@
                     <td>24</td>
                     <td>0</td>
                     <td>24</td>
-                </tr>
-                <tr>
-                    <td>Non-Production Hrs</td>
-                    <td>31.74</td>
-                    <td>27.25</td>
-                    <td>58.99</td>
                 </tr>
                 <tr>
                     <td>No Of NMR</td>
@@ -381,6 +502,18 @@
         function loadData() {
             // In a real implementation, this would load data for the selected date
             alert('In a real implementation, this would load data for the selected date');
+        }
+
+        function showVRMData() {
+            alert('VRM Year-to-Date Production: 2374.1 MT');
+        }
+
+        function showDryerData() {
+            alert('Dryer Year-to-Date Production: 2442 MT');
+        }
+
+        function showDispatchData() {
+            alert('Year-to-Date Dispatch: 2104 MT');
         }
     </script>
 </body>
