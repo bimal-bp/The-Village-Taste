@@ -3,384 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Production Performance Dashboard</title>
+    <title>Production Dashboard - Week 9-14</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: #f5f5f5;
         }
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        h1 {
-            color: #2c3e50;
-            margin: 0;
-        }
-        .date-selector {
-            display: flex;
-            gap: 10px;
-        }
-        .kpi-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .kpi-box {
-            background-color: white;
-            border-radius: 8px;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
             padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-left: 4px solid #3498db;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
         }
-        .kpi-box.ytd {
-            border-left-color: #e74c3c;
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
         }
-        .kpi-box h3 {
-            margin-top: 0;
-            color: #7f8c8d;
-            font-size: 14px;
+        .col {
+            flex: 1;
+            min-width: 300px;
+            padding: 10px;
+            box-sizing: border-box;
         }
-        .kpi-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .kpi-label {
-            font-size: 12px;
-            color: #95a5a6;
-        }
-        .chart-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .chart-box {
+        .card {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .chart-box h2 {
-            margin-top: 0;
-            font-size: 16px;
-            color: #2c3e50;
-        }
-        .data-table {
-            width: 100%;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             margin-bottom: 20px;
-            overflow: hidden;
+            height: 100%;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
         }
         th, td {
-            padding: 12px 15px;
+            padding: 8px;
             text-align: left;
-            border-bottom: 1px solid #ecf0f1;
+            border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #f8f9fa;
-            color: #7f8c8d;
-            font-weight: 600;
+            background-color: #f2f2f2;
         }
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-        .section-title {
-            color: #2c3e50;
-            margin: 25px 0 15px 0;
-        }
-        .divider {
-            border: 0;
-            height: 1px;
-            background-color: #ecf0f1;
-            margin: 20px 0;
-        }
-        .button-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .button-container button {
-            padding: 8px 16px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .button-container button:hover {
-            background-color: #2980b9;
-        }
-        .consumption-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .consumption-item {
-            background-color: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .consumption-item h3 {
-            margin-top: 0;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        .consumption-value {
-            font-size: 24px;
+        .highlight {
             font-weight: bold;
-            color: #2c3e50;
+            color: #e74c3c;
         }
-        .consumption-label {
-            font-size: 12px;
-            color: #95a5a6;
-        }
-        .customer-box {
-            background-color: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        .customer-box h3 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-        .customer-list {
+        .summary {
             display: flex;
-            gap: 20px;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
-        .customer-item {
+        .summary-item {
+            flex: 1;
+            min-width: 120px;
             text-align: center;
+            padding: 10px;
+            margin: 5px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
         }
-        .customer-count {
+        .summary-item h4 {
+            margin: 0 0 5px 0;
+            color: #7f8c8d;
+        }
+        .summary-item p {
+            margin: 0;
             font-size: 24px;
             font-weight: bold;
-            color: #3498db;
-        }
-        .customer-name {
-            font-size: 14px;
-            color: #7f8c8d;
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-header">
-        <h1>Production Performance Dashboard (June 9 - June 14)</h1>
-        <div class="date-selector">
-            <input type="date" id="date-selector">
-            <button onclick="loadData()">Load Data</button>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Production Dashboard</h1>
+            <h2>Week 9-14</h2>
         </div>
-    </div>
 
-    <h2 class="section-title">Key Performance Indicators</h2>
-    <div class="kpi-container">
-        <div class="kpi-box">
-            <h3>VRM Production</h3>
-            <div class="kpi-value">679.05 MT</div>
-            <div class="kpi-label">Total Week Production</div>
-        </div>
-        <div class="kpi-box">
-            <h3>Dryer Production</h3>
-            <div class="kpi-value">674.5 MT</div>
-            <div class="kpi-label">Total Week Production</div>
-        </div>
-        <div class="kpi-box">
-            <h3>Dispatch Quantity</h3>
-            <div class="kpi-value">734.96 MT</div>
-            <div class="kpi-label">Total Week Dispatch</div>
-        </div>
-    </div>
-
-    <div class="kpi-container">
-        <div class="kpi-box ytd">
-            <h3>VRM Production (YTD)</h3>
-            <div class="kpi-value">2374.1 MT</div>
-            <div class="kpi-label">Year-to-Date Total</div>
-        </div>
-        <div class="kpi-box ytd">
-            <h3>Dryer Production (YTD)</h3>
-            <div class="kpi-value">2442 MT</div>
-            <div class="kpi-label">Year-to-Date Total</div>
-        </div>
-        <div class="kpi-box ytd">
-            <h3>Dispatch Quantity (YTD)</h3>
-            <div class="kpi-value">2104 MT</div>
-            <div class="kpi-label">Year-to-Date Total</div>
-        </div>
-    </div>
-
-    <div class="customer-box">
-        <h3>Customer-wise Dispatch</h3>
-        <div class="customer-list">
-            <div class="customer-item">
-                <div class="customer-count">21</div>
-                <div class="customer-name">TALEGAON</div>
+        <div class="summary">
+            <div class="summary-item">
+                <h4>Total VRM Production</h4>
+                <p>317.35</p>
             </div>
-            <div class="customer-item">
-                <div class="customer-count">1</div>
-                <div class="customer-name">ULTRATECH</div>
+            <div class="summary-item">
+                <h4>Total Dry Production</h4>
+                <p>342</p>
             </div>
-            <div class="customer-item">
-                <div class="customer-count">2</div>
-                <div class="customer-name">TALOJA</div>
+            <div class="summary-item">
+                <h4>Total Dispatch</h4>
+                <p>326.97</p>
+            </div>
+            <div class="summary-item">
+                <h4>Total Fuel Consumed</h4>
+                <p>860 Ltr</p>
+            </div>
+            <div class="summary-item">
+                <h4>Total Electricity</h4>
+                <p>11,764 Unit</p>
             </div>
         </div>
-    </div>
 
-    <div class="consumption-box">
-        <div class="consumption-item" style="border-left: 4px solid #f39c12;">
-            <h3>Total JCB Diesel Consumption</h3>
-            <div class="consumption-value">300 Ltrs</div>
-            <div class="consumption-label">Week Total</div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <h3>Production Overview</h3>
+                    <canvas id="productionChart"></canvas>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <h3>Resource Consumption</h3>
+                    <canvas id="consumptionChart"></canvas>
+                </div>
+            </div>
         </div>
-        <div class="consumption-item" style="border-left: 4px solid #9b59b6;">
-            <h3>Total LDO Consumption</h3>
-            <div class="consumption-value">1145 Ltrs</div>
-            <div class="consumption-label">Week Total</div>
-        </div>
-    </div>
 
-    <h2 class="section-title">Production Trends</h2>
-    <div class="chart-container">
-        <div class="chart-box">
-            <h2>Daily Production Quantity (MT)</h2>
-            <canvas id="productionChart"></canvas>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <h3>VRM Production Details</h3>
+                    <table>
+                        <tr>
+                            <th>Week</th>
+                            <th>Production</th>
+                            <th>Working Hours</th>
+                            <th>Efficiency (Prod/Hr)</th>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>47.3</td>
+                            <td>2.9</td>
+                            <td>16.31</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>88.7</td>
+                            <td>4.53</td>
+                            <td>19.58</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>43.7</td>
+                            <td>2.4</td>
+                            <td>18.21</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>33</td>
+                            <td>1.8</td>
+                            <td>18.33</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>71.4</td>
+                            <td>3.75</td>
+                            <td>19.04</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>34.25</td>
+                            <td>1.85</td>
+                            <td>18.51</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <h3>Dry Production Details</h3>
+                    <table>
+                        <tr>
+                            <th>Week</th>
+                            <th>Production</th>
+                            <th>Working Hours</th>
+                            <th>Efficiency (Prod/Hr)</th>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>47</td>
+                            <td>7.1</td>
+                            <td>6.62</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>93</td>
+                            <td>9</td>
+                            <td>10.33</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>37</td>
+                            <td>3</td>
+                            <td>12.33</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>32</td>
+                            <td>2</td>
+                            <td>16.00</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>67</td>
+                            <td>4</td>
+                            <td>16.75</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>66</td>
+                            <td>4</td>
+                            <td>16.50</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="chart-box">
-            <h2>Resource Consumption</h2>
-            <canvas id="consumptionChart"></canvas>
-        </div>
-    </div>
 
-    <h2 class="section-title">Production Details</h2>
-    <div class="data-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Day Shift</th>
-                    <th>Night Shift</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="4" style="background-color: #f8f9fa; font-weight: bold;">VRM</td>
-                </tr>
-                <tr>
-                    <td>Production Qty (MT)</td>
-                    <td>350.8</td>
-                    <td>328.25</td>
-                    <td>679.05</td>
-                </tr>
-                <tr>
-                    <td>Running Hrs</td>
-                    <td>23.25</td>
-                    <td>25.15</td>
-                    <td>48.4</td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="background-color: #f8f9fa; font-weight: bold;">Dryer</td>
-                </tr>
-                <tr>
-                    <td>Production Qty (MT)</td>
-                    <td>424.5</td>
-                    <td>250</td>
-                    <td>674.5</td>
-                </tr>
-                <tr>
-                    <td>Running Hrs</td>
-                    <td>38.5</td>
-                    <td>23.1</td>
-                    <td>61.6</td>
-                </tr>
-                <tr>
-                    <td>Dispatch Qty (MT)</td>
-                    <td>734.96</td>
-                    <td>0</td>
-                    <td>734.96</td>
-                </tr>
-                <tr>
-                    <td>NO Of Vehicles</td>
-                    <td>24</td>
-                    <td>0</td>
-                    <td>24</td>
-                </tr>
-                <tr>
-                    <td>No Of NMR</td>
-                    <td>139</td>
-                    <td>96</td>
-                    <td>235</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h2 class="section-title">Raw Material Received</h2>
-    <div class="chart-container">
-        <div class="chart-box">
-            <h2>Raw Material Received (MT)</h2>
-            <canvas id="rawMaterialChart"></canvas>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <h3>Dispatch & NMR</h3>
+                    <table>
+                        <tr>
+                            <th>Week</th>
+                            <th>Dispatch Qty</th>
+                            <th>NMR Count</th>
+                            <th>JCB Hours</th>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>95.34</td>
+                            <td>21</td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>60.7</td>
+                            <td>20</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>24.03</td>
+                            <td>17</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>30.8</td>
+                            <td>9</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>60.1</td>
+                            <td>20</td>
+                            <td>12.5</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>56</td>
+                            <td>14</td>
+                            <td>8.5</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <h3>Raw Material Received</h3>
+                    <table>
+                        <tr>
+                            <th>Week</th>
+                            <th>SGX Slurry</th>
+                            <th>RWM-1 RH</th>
+                            <th>RWM-2 OPC</th>
+                            <th>Total</th>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>33.2</td>
+                            <td>30</td>
+                            <td>5</td>
+                            <td>68.2</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>31.2</td>
+                            <td>35</td>
+                            <td>7.5</td>
+                            <td>73.7</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>7.5</td>
+                            <td>7.5</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>61.3</td>
+                            <td>30</td>
+                            <td>37</td>
+                            <td>128.3</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Set today's date as default
-        document.getElementById('date-selector').valueAsDate = new Date();
-        
         // Production Chart
         const productionCtx = document.getElementById('productionChart').getContext('2d');
         const productionChart = new Chart(productionCtx, {
             type: 'bar',
             data: {
-                labels: ['June 9', 'June 10', 'June 11', 'June 12', 'June 13', 'June 14'],
+                labels: ['Week 9', 'Week 10', 'Week 11', 'Week 12', 'Week 13', 'Week 14'],
                 datasets: [
                     {
                         label: 'VRM Production',
                         data: [47.3, 88.7, 43.7, 33, 71.4, 34.25],
-                        backgroundColor: 'rgba(41, 128, 185, 0.7)',
-                        borderColor: 'rgba(41, 128, 185, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Dryer Production',
+                        label: 'Dry Production',
                         data: [47, 93, 37, 32, 67, 66],
-                        backgroundColor: 'rgba(231, 76, 60, 0.7)',
-                        borderColor: 'rgba(231, 76, 60, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
+                    },
+                    {
+                        label: 'Dispatch Qty',
+                        data: [95.34, 60.7, 24.03, 30.8, 60.1, 56],
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        type: 'line',
+                        fill: false
                     }
                 ]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                },
                 scales: {
                     y: {
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Quantity (MT)'
+                            text: 'Quantity'
                         }
                     }
                 }
@@ -390,34 +397,30 @@
         // Consumption Chart
         const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
         const consumptionChart = new Chart(consumptionCtx, {
-            type: 'bar',
+            type: 'line',
             data: {
-                labels: ['June 9', 'June 10', 'June 11', 'June 12', 'June 13', 'June 14'],
+                labels: ['Week 9', 'Week 10', 'Week 11', 'Week 12', 'Week 13', 'Week 14'],
                 datasets: [
                     {
-                        label: 'Fuel Consumed - Dryer (Ltr)',
+                        label: 'Fuel Consumed (Ltr)',
                         data: [90, 15, 190, 110, 255, 190],
-                        backgroundColor: 'rgba(243, 156, 18, 0.7)',
-                        borderColor: 'rgba(243, 156, 18, 1)',
-                        borderWidth: 1
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 2,
+                        yAxisID: 'y'
                     },
                     {
-                        label: 'Electricity Consumed - VRM (Unit)',
+                        label: 'Electricity (Unit)',
                         data: [2032, 3052, 1664, 1356, 2400, 1260],
-                        backgroundColor: 'rgba(46, 204, 113, 0.7)',
-                        borderColor: 'rgba(46, 204, 113, 1)',
-                        borderWidth: 1,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 2,
                         yAxisID: 'y1'
                     }
                 ]
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                },
                 scales: {
                     y: {
                         type: 'linear',
@@ -425,7 +428,7 @@
                         position: 'left',
                         title: {
                             display: true,
-                            text: 'Fuel (Liters)'
+                            text: 'Fuel (Ltr)'
                         }
                     },
                     y1: {
@@ -434,7 +437,7 @@
                         position: 'right',
                         title: {
                             display: true,
-                            text: 'Electricity (Units)'
+                            text: 'Electricity (Unit)'
                         },
                         grid: {
                             drawOnChartArea: false
@@ -443,72 +446,6 @@
                 }
             }
         });
-
-        // Raw Material Chart
-        const rawMaterialCtx = document.getElementById('rawMaterialChart').getContext('2d');
-        const rawMaterialChart = new Chart(rawMaterialCtx, {
-            type: 'bar',
-            data: {
-                labels: ['June 9', 'June 10', 'June 11', 'June 12', 'June 13', 'June 14'],
-                datasets: [
-                    {
-                        label: 'SGX Slurry',
-                        data: [0, 33.2, 31.2, 0, 0, 61.3],
-                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
-                        borderColor: 'rgba(52, 152, 219, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'RWM-1 RH',
-                        data: [0, 30, 35, 0, 0, 30],
-                        backgroundColor: 'rgba(155, 89, 182, 0.7)',
-                        borderColor: 'rgba(155, 89, 182, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'RWM-2 OPC',
-                        data: [0, 5, 7.5, 7.5, 0, 37],
-                        backgroundColor: 'rgba(26, 188, 156, 0.7)',
-                        borderColor: 'rgba(26, 188, 156, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Quantity (MT)'
-                        }
-                    }
-                }
-            }
-        });
-
-        function loadData() {
-            // In a real implementation, this would load data for the selected date
-            alert('In a real implementation, this would load data for the selected date');
-        }
-
-        function showVRMData() {
-            alert('VRM Year-to-Date Production: 2374.1 MT');
-        }
-
-        function showDryerData() {
-            alert('Dryer Year-to-Date Production: 2442 MT');
-        }
-
-        function showDispatchData() {
-            alert('Year-to-Date Dispatch: 2104 MT');
-        }
     </script>
 </body>
 </html>
