@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Village Test in Action System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -13,9 +14,12 @@
         }
         
         body {
-            background-color: #f9f6f1;
+            background: linear-gradient(to bottom, #f5f9ee, #e6f2d5);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
@@ -31,6 +35,13 @@
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         header h1 {
@@ -38,11 +49,57 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
         }
         
-        /* Product Grid Styles */
+        .action-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-button:hover {
+            background: #f57c00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        .action-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Products Grid Styles */
         .products {
             padding: 40px 0;
+            flex: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2e7d32;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #4caf50;
+            margin: 10px auto;
+            border-radius: 2px;
         }
         
         .product-grid {
@@ -58,13 +115,32 @@
             padding: 25px 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-box:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
         }
         
         .product-box:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .product-box:hover:before {
+            transform: scaleX(1);
         }
         
         .product-box h3 {
@@ -77,6 +153,28 @@
             font-size: 2.5rem;
             margin-bottom: 10px;
             color: #4caf50;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-box:hover .product-icon {
+            transform: scale(1.2);
+        }
+        
+        .product-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .product-box.active .product-desc {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Footer Styles */
@@ -115,6 +213,13 @@
         .footer-section ul li {
             margin-bottom: 12px;
             font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-section ul li i {
+            margin-right: 10px;
+            color: #a5d6a7;
         }
         
         .contact-info {
@@ -130,6 +235,9 @@
         .contact-icon {
             margin-right: 10px;
             font-size: 1.2rem;
+            color: #a5d6a7;
+            width: 25px;
+            text-align: center;
         }
         
         .copyright {
@@ -154,6 +262,10 @@
             header h1 {
                 font-size: 1.8rem;
             }
+            
+            .footer-section {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -161,7 +273,12 @@
     <!-- Header Section -->
     <header>
         <div class="container">
-            <h1>Village Test in Action System</h1>
+            <div class="header-content">
+                <h1>Village Test in Action System</h1>
+                <button class="action-button" id="actionBtn">
+                    <i class="fas fa-bolt"></i> Test in Action
+                </button>
+            </div>
         </div>
     </header>
     
@@ -169,53 +286,62 @@
     <main class="container">
         <!-- Products Grid -->
         <section class="products">
+            <h2 class="section-title">Our Village Products</h2>
             <div class="product-grid">
                 <!-- Cashew Box -->
                 <div class="product-box">
                     <div class="product-icon">🥜</div>
                     <h3>Cashew</h3>
+                    <p class="product-desc">Premium quality cashews, handpicked and sun-dried for perfect flavor and crunch.</p>
                 </div>
                 
                 <!-- Numkim Box -->
                 <div class="product-box">
                     <div class="product-icon">🍚</div>
                     <h3>Numkim</h3>
+                    <p class="product-desc">Traditional recipe with authentic spices and ingredients for that perfect taste.</p>
                 </div>
                 
                 <!-- Mixture Box -->
                 <div class="product-box">
                     <div class="product-icon">🍱</div>
                     <h3>Mixture</h3>
+                    <p class="product-desc">A delightful blend of crispy elements with just the right amount of spices.</p>
                 </div>
                 
                 <!-- Rice Box -->
                 <div class="product-box">
                     <div class="product-icon">🍚</div>
                     <h3>Rice</h3>
+                    <p class="product-desc">Farm-fresh, organic rice varieties grown with sustainable farming practices.</p>
                 </div>
                 
                 <!-- Pulses Box -->
                 <div class="product-box">
                     <div class="product-icon">🌰</div>
                     <h3>Pulses</h3>
+                    <p class="product-desc">Nutrient-rich pulses, a perfect source of protein for your daily diet.</p>
                 </div>
                 
                 <!-- Pampada Pickels Box -->
                 <div class="product-box">
                     <div class="product-icon">🥒</div>
                     <h3>Pampada Pickels</h3>
+                    <p class="product-desc">Homemade pickles with traditional recipes passed down through generations.</p>
                 </div>
                 
                 <!-- Chakli Box -->
                 <div class="product-box">
                     <div class="product-icon">🥨</div>
                     <h3>Chakli</h3>
+                    <p class="product-desc">Crispy, spiral snacks made from finest ingredients and authentic recipes.</p>
                 </div>
                 
-                <!-- Additional Box (if needed) -->
+                <!-- Special Box -->
                 <div class="product-box">
                     <div class="product-icon">🍯</div>
                     <h3>Special Items</h3>
+                    <p class="product-desc">Seasonal and special village products that are unique to our region.</p>
                 </div>
             </div>
         </section>
@@ -229,14 +355,14 @@
                 <div class="footer-section">
                     <h3>Our Product Parts</h3>
                     <ul>
-                        <li>Cashew - Premium Quality</li>
-                        <li>Numkim - Traditional Recipe</li>
-                        <li>Mixture - Spicy & Tasty</li>
-                        <li>Rice - Farm Fresh</li>
-                        <li>Pulses - Organic Variety</li>
-                        <li>Pampada Pickels - Homemade</li>
-                        <li>Chakli - Crispy Snacks</li>
-                        <li>Special Items - Seasonal</li>
+                        <li><i class="fas fa-check-circle"></i> Cashew - Premium Quality</li>
+                        <li><i class="fas fa-check-circle"></i> Numkim - Traditional Recipe</li>
+                        <li><i class="fas fa-check-circle"></i> Mixture - Spicy & Tasty</li>
+                        <li><i class="fas fa-check-circle"></i> Rice - Farm Fresh</li>
+                        <li><i class="fas fa-check-circle"></i> Pulses - Organic Variety</li>
+                        <li><i class="fas fa-check-circle"></i> Pampada Pickels - Homemade</li>
+                        <li><i class="fas fa-check-circle"></i> Chakli - Crispy Snacks</li>
+                        <li><i class="fas fa-check-circle"></i> Special Items - Seasonal</li>
                     </ul>
                 </div>
                 
@@ -244,10 +370,10 @@
                 <div class="footer-section">
                     <h3>Contact Us</h3>
                     <div class="contact-info">
-                        <p><span class="contact-icon">📞</span> Mobile: +91 98765 43210</p>
-                        <p><span class="contact-icon">📱</span> WhatsApp: +91 97654 32109</p>
-                        <p><span class="contact-icon">✉️</span> Email: info@village-test.com</p>
-                        <p><span class="contact-icon">🏠</span> Address: Village Test Center, Main Road, District, State - 123456</p>
+                        <p><span class="contact-icon"><i class="fas fa-phone"></i></span> +91 98765 43210</p>
+                        <p><span class="contact-icon"><i class="fab fa-whatsapp"></i></span> +91 97654 32109</p>
+                        <p><span class="contact-icon"><i class="fas fa-envelope"></i></span> info@villageaction.com</p>
+                        <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Village Test Center, Main Road, District, State - 123456</p>
                     </div>
                 </div>
             </div>
@@ -257,5 +383,42 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Action button functionality
+        document.getElementById('actionBtn').addEventListener('click', function() {
+            alert('Village Test in Action System Activated!\nWe are now processing your request.');
+            this.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Action Completed!';
+                this.style.background = '#4caf50';
+                
+                // Return to original state after another 2 seconds
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-bolt"></i> Test in Action';
+                    this.style.background = '#ff9800';
+                }, 2000);
+            }, 2000);
+        });
+        
+        // Product box functionality
+        const productBoxes = document.querySelectorAll('.product-box');
+        
+        productBoxes.forEach(box => {
+            box.addEventListener('click', function() {
+                // Toggle active class to show/hide description
+                this.classList.toggle('active');
+                
+                // Close other open boxes
+                productBoxes.forEach(otherBox => {
+                    if (otherBox !== this && otherBox.classList.contains('active')) {
+                        otherBox.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
