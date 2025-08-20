@@ -61,33 +61,6 @@
             text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
         }
         
-        .action-button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 100;
-        }
-        
-        .action-button:hover {
-            background: var(--accent-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-        }
-        
-        .action-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        
         /* Floating Action Button */
         .floating-action-btn {
             position: fixed;
@@ -147,14 +120,14 @@
         .product-box {
             background: white;
             border-radius: 15px;
-            padding: 30px 20px;
+            padding: 35px 25px; /* Increased padding for larger boxes */
             text-align: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 280px;
+            min-height: 330px; /* Increased from 280px to 330px (approx 20%) */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -184,15 +157,15 @@
         }
         
         .product-box h3 {
-            font-size: 1.6rem;
+            font-size: 1.8rem; /* Slightly increased font size */
             color: var(--primary-color);
             margin-top: 20px;
             font-weight: 600;
         }
         
         .product-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
+            font-size: 4rem; /* Increased from 3.5rem to 4rem */
+            margin-bottom: 20px; /* Increased margin */
             color: var(--secondary-color);
             transition: all 0.3s ease;
         }
@@ -203,8 +176,8 @@
         
         .product-desc {
             color: #666;
-            font-size: 1rem;
-            margin-top: 15px;
+            font-size: 1.1rem; /* Slightly increased font size */
+            margin-top: 20px; /* Increased margin */
             display: none;
             line-height: 1.5;
         }
@@ -217,8 +190,8 @@
         .product-price {
             font-weight: bold;
             color: var(--accent-color);
-            margin-top: 10px;
-            font-size: 1.2rem;
+            margin-top: 15px; /* Increased margin */
+            font-size: 1.3rem; /* Slightly increased font size */
             display: none;
         }
         
@@ -322,8 +295,8 @@
             }
             
             .product-box {
-                padding: 25px 15px;
-                min-height: 250px;
+                padding: 30px 20px; /* Adjusted for mobile */
+                min-height: 300px; /* Adjusted for mobile */
             }
             
             header h1 {
@@ -371,9 +344,6 @@
         <div class="container">
             <div class="header-content">
                 <h1 id="mainTitle">The Village Taste</h1>
-                <button class="action-button" id="actionBtn">
-                    <i class="fas fa-bolt"></i> Taste in Action
-                </button>
             </div>
         </div>
     </header>
@@ -569,46 +539,28 @@
             return `#${r}${g}${b}`;
         }
         
-        // Change color scheme on click anywhere
-        document.addEventListener('click', function(e) {
-            // Don't change colors if clicking on product boxes (they have their own functionality)
-            if (!e.target.closest('.product-box')) {
-                const primary = getRandomColor();
-                const secondary = getComplementaryColor(primary);
-                const accent = getRandomColor();
-                const accentDark = getLighterColor(accent, -0.3);
-                const secondaryLight = getLighterColor(secondary, 0.7);
-                
-                setColorScheme(primary, secondary, accent, accentDark, secondaryLight);
-                
-                // Add animation to title
-                const title = document.getElementById('mainTitle');
-                title.classList.add('title-animate');
-                
-                // Remove animation class after animation completes
-                setTimeout(() => {
-                    title.classList.remove('title-animate');
-                }, 500);
-            }
-        });
-        
-        // Action button functionality
-        document.getElementById('actionBtn').addEventListener('click', function() {
-            alert('The Village Taste System Activated!\nWe are now processing your request.');
-            this.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
+        // Function to change colors automatically
+        function changeColorsAutomatically() {
+            const primary = getRandomColor();
+            const secondary = getComplementaryColor(primary);
+            const accent = getRandomColor();
+            const accentDark = getLighterColor(accent, -0.3);
+            const secondaryLight = getLighterColor(secondary, 0.7);
             
-            // Reset button after 2 seconds
+            setColorScheme(primary, secondary, accent, accentDark, secondaryLight);
+            
+            // Add animation to title
+            const title = document.getElementById('mainTitle');
+            title.classList.add('title-animate');
+            
+            // Remove animation class after animation completes
             setTimeout(() => {
-                this.innerHTML = '<i class="fas fa-check"></i> Action Completed!';
-                this.style.background = 'var(--secondary-color)';
-                
-                // Return to original state after another 2 seconds
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-bolt"></i> Taste in Action';
-                    this.style.background = 'var(--accent-color)';
-                }, 2000);
-            }, 2000);
-        });
+                title.classList.remove('title-animate');
+            }, 500);
+        }
+        
+        // Change color scheme automatically every 3 seconds
+        setInterval(changeColorsAutomatically, 3000);
         
         // Floating action button functionality
         document.getElementById('floatingBtn').addEventListener('click', function() {
