@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Test in Action System</title>
+    <title>The Village Taste</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -20,6 +20,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.5s ease;
         }
         
         .container {
@@ -30,12 +31,13 @@
         
         /* Header Styles */
         header {
-            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: relative;
+            transition: all 0.5s ease;
         }
         
         .header-content {
@@ -50,10 +52,17 @@
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        header h1:hover {
+            transform: scale(1.05);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
         }
         
         .action-button {
-            background: #ff9800;
+            background: var(--accent-color);
             color: white;
             border: none;
             padding: 12px 25px;
@@ -69,7 +78,7 @@
         }
         
         .action-button:hover {
-            background: #f57c00;
+            background: var(--accent-dark);
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.25);
         }
@@ -86,7 +95,7 @@
             right: 30px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #ff9800, #f57c00);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
             color: white;
             border-radius: 50%;
             display: flex;
@@ -113,7 +122,7 @@
         .section-title {
             text-align: center;
             margin-bottom: 40px;
-            color: #2e7d32;
+            color: var(--primary-color);
             font-size: 2rem;
             position: relative;
         }
@@ -123,14 +132,14 @@
             display: block;
             width: 80px;
             height: 4px;
-            background: #4caf50;
+            background: var(--secondary-color);
             margin: 10px auto;
             border-radius: 2px;
         }
         
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 30px;
             margin-top: 30px;
         }
@@ -159,7 +168,7 @@
             left: 0;
             width: 100%;
             height: 6px;
-            background: linear-gradient(to right, #4caf50, #8bc34a);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease;
@@ -176,7 +185,7 @@
         
         .product-box h3 {
             font-size: 1.6rem;
-            color: #2e7d32;
+            color: var(--primary-color);
             margin-top: 20px;
             font-weight: 600;
         }
@@ -184,7 +193,7 @@
         .product-icon {
             font-size: 3.5rem;
             margin-bottom: 15px;
-            color: #4caf50;
+            color: var(--secondary-color);
             transition: all 0.3s ease;
         }
         
@@ -207,7 +216,7 @@
         
         .product-price {
             font-weight: bold;
-            color: #e91e63;
+            color: var(--accent-color);
             margin-top: 10px;
             font-size: 1.2rem;
             display: none;
@@ -224,10 +233,11 @@
         
         /* Footer Styles */
         footer {
-            background: #2e7d32;
+            background: var(--primary-color);
             color: white;
             padding: 40px 0 20px;
             margin-top: 40px;
+            transition: all 0.5s ease;
         }
         
         .footer-content {
@@ -246,7 +256,7 @@
         .footer-section h3 {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            border-bottom: 2px solid #4caf50;
+            border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 10px;
             display: inline-block;
         }
@@ -264,7 +274,7 @@
         
         .footer-section ul li i {
             margin-right: 10px;
-            color: #a5d6a7;
+            color: var(--secondary-light);
         }
         
         .contact-info {
@@ -280,7 +290,7 @@
         .contact-icon {
             margin-right: 10px;
             font-size: 1.2rem;
-            color: #a5d6a7;
+            color: var(--secondary-light);
             width: 25px;
             text-align: center;
         }
@@ -295,19 +305,19 @@
         /* Responsive Design */
         @media (max-width: 1200px) {
             .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
             }
         }
         
         @media (max-width: 992px) {
             .product-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
         }
         
         @media (max-width: 768px) {
             .product-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
             }
             
@@ -326,6 +336,10 @@
         }
         
         @media (max-width: 576px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .footer-section {
                 min-width: 100%;
             }
@@ -338,6 +352,17 @@
                 font-size: 1.2rem;
             }
         }
+        
+        /* Animation for title */
+        @keyframes titlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .title-animate {
+            animation: titlePulse 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -345,9 +370,9 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <h1>Village Test in Action System</h1>
+                <h1 id="mainTitle">The Village Taste</h1>
                 <button class="action-button" id="actionBtn">
-                    <i class="fas fa-bolt"></i> Test in Action
+                    <i class="fas fa-bolt"></i> Taste in Action
                 </button>
             </div>
         </div>
@@ -359,6 +384,7 @@
         <section class="products">
             <h2 class="section-title">Our Village Products</h2>
             <div class="product-grid">
+                <!-- Row 1 -->
                 <!-- Cashew Box -->
                 <div class="product-box">
                     <div class="product-icon">🥜</div>
@@ -399,6 +425,7 @@
                     <p class="product-price">₹90/pack</p>
                 </div>
                 
+                <!-- Row 2 -->
                 <!-- Rice Box -->
                 <div class="product-box">
                     <div class="product-icon">🍚</div>
@@ -474,33 +501,111 @@
                     <div class="contact-info">
                         <p><span class="contact-icon"><i class="fas fa-phone"></i></span> +91 98765 43210</p>
                         <p><span class="contact-icon"><i class="fab fa-whatsapp"></i></span> +91 97654 32109</p>
-                        <p><span class="contact-icon"><i class="fas fa-envelope"></i></span> info@villageaction.com</p>
-                        <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Village Test Center, Main Road, District, State - 123456</p>
+                        <p><span class="contact-icon"><i class="fas fa-envelope"></i></span> info@villagetaste.com</p>
+                        <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Village Taste Center, Main Road, District, State - 123456</p>
                     </div>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Village Test in Action System. All rights reserved.</p>
+                <p>&copy; 2023 The Village Taste. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Define CSS variables for color scheme
+        const root = document.documentElement;
+        
+        // Set initial color scheme
+        setColorScheme('#2e7d32', '#4caf50', '#ff9800', '#f57c00', '#a5d6a7');
+        
+        // Function to set color scheme
+        function setColorScheme(primary, secondary, accent, accentDark, secondaryLight) {
+            root.style.setProperty('--primary-color', primary);
+            root.style.setProperty('--secondary-color', secondary);
+            root.style.setProperty('--accent-color', accent);
+            root.style.setProperty('--accent-dark', accentDark);
+            root.style.setProperty('--secondary-light', secondaryLight);
+        }
+        
+        // Random color generator
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
+        // Function to generate a complementary color
+        function getComplementaryColor(hex) {
+            // Convert hex to RGB
+            let r = parseInt(hex.slice(1, 3), 16);
+            let g = parseInt(hex.slice(3, 5), 16);
+            let b = parseInt(hex.slice(5, 7), 16);
+            
+            // Calculate complementary color
+            r = (255 - r).toString(16).padStart(2, '0');
+            g = (255 - g).toString(16).padStart(2, '0');
+            b = (255 - b).toString(16).padStart(2, '0');
+            
+            return `#${r}${g}${b}`;
+        }
+        
+        // Function to generate a slightly lighter version of a color
+        function getLighterColor(hex, percent) {
+            // Convert hex to RGB
+            let r = parseInt(hex.slice(1, 3), 16);
+            let g = parseInt(hex.slice(3, 5), 16);
+            let b = parseInt(hex.slice(5, 7), 16);
+            
+            // Lighten each component
+            r = Math.min(255, Math.floor(r + (255 - r) * percent)).toString(16).padStart(2, '0');
+            g = Math.min(255, Math.floor(g + (255 - g) * percent)).toString(16).padStart(2, '0');
+            b = Math.min(255, Math.floor(b + (255 - b) * percent)).toString(16).padStart(2, '0');
+            
+            return `#${r}${g}${b}`;
+        }
+        
+        // Change color scheme on click anywhere
+        document.addEventListener('click', function(e) {
+            // Don't change colors if clicking on product boxes (they have their own functionality)
+            if (!e.target.closest('.product-box')) {
+                const primary = getRandomColor();
+                const secondary = getComplementaryColor(primary);
+                const accent = getRandomColor();
+                const accentDark = getLighterColor(accent, -0.3);
+                const secondaryLight = getLighterColor(secondary, 0.7);
+                
+                setColorScheme(primary, secondary, accent, accentDark, secondaryLight);
+                
+                // Add animation to title
+                const title = document.getElementById('mainTitle');
+                title.classList.add('title-animate');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    title.classList.remove('title-animate');
+                }, 500);
+            }
+        });
+        
         // Action button functionality
         document.getElementById('actionBtn').addEventListener('click', function() {
-            alert('Village Test in Action System Activated!\nWe are now processing your request.');
+            alert('The Village Taste System Activated!\nWe are now processing your request.');
             this.innerHTML = '<i class="fas fa-cog fa-spin"></i> Processing...';
             
             // Reset button after 2 seconds
             setTimeout(() => {
                 this.innerHTML = '<i class="fas fa-check"></i> Action Completed!';
-                this.style.background = '#4caf50';
+                this.style.background = 'var(--secondary-color)';
                 
                 // Return to original state after another 2 seconds
                 setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-bolt"></i> Test in Action';
-                    this.style.background = '#ff9800';
+                    this.innerHTML = '<i class="fas fa-bolt"></i> Taste in Action';
+                    this.style.background = 'var(--accent-color)';
                 }, 2000);
             }, 2000);
         });
