@@ -3,449 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Production Dashboard - Week 9-14</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Village Test in Action System</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .dashboard {
+        
+        body {
+            background-color: #f9f6f1;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: #2c3e50;
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
             color: white;
-            border-radius: 5px;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .row {
+        
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Product Grid Styles */
+        .products {
+            padding: 40px 0;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .product-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .product-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .product-box h3 {
+            font-size: 1.4rem;
+            color: #2e7d32;
+            margin-top: 15px;
+        }
+        
+        .product-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4caf50;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: #2e7d32;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
             display: flex;
             flex-wrap: wrap;
-            margin: 0 -10px;
+            justify-content: space-between;
         }
-        .col {
+        
+        .footer-section {
             flex: 1;
             min-width: 300px;
-            padding: 10px;
-            box-sizing: border-box;
+            margin-bottom: 30px;
+            padding: 0 20px;
         }
-        .card {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 15px;
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
             margin-bottom: 20px;
-            height: 100%;
-        }
-        .card h3 {
-            margin-top: 0;
-            color: #2c3e50;
-            border-bottom: 1px solid #eee;
+            border-bottom: 2px solid #4caf50;
             padding-bottom: 10px;
+            display: inline-block;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        
+        .footer-section ul {
+            list-style: none;
         }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        
+        .footer-section ul li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
-        th {
-            background-color: #f2f2f2;
+        
+        .contact-info {
+            margin-top: 15px;
         }
-        .highlight {
-            font-weight: bold;
-            color: #e74c3c;
-        }
-        .summary {
+        
+        .contact-info p {
+            margin-bottom: 12px;
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            align-items: center;
         }
-        .summary-item {
-            flex: 1;
-            min-width: 120px;
+        
+        .contact-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
             text-align: center;
-            padding: 10px;
-            margin: 5px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
-        .summary-item h4 {
-            margin: 0 0 5px 0;
-            color: #7f8c8d;
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-        .summary-item p {
-            margin: 0;
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
+        
+        @media (max-width: 576px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <div class="header">
-            <h1>Production Dashboard</h1>
-            <h2>Week 9-14</h2>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Village Test in Action System</h1>
         </div>
-
-        <div class="summary">
-            <div class="summary-item">
-                <h4>Total VRM Production</h4>
-                <p>317.35</p>
-            </div>
-            <div class="summary-item">
-                <h4>Total Dry Production</h4>
-                <p>342</p>
-            </div>
-            <div class="summary-item">
-                <h4>Total Dispatch</h4>
-                <p>326.97</p>
-            </div>
-            <div class="summary-item">
-                <h4>Total Fuel Consumed</h4>
-                <p>860 Ltr</p>
-            </div>
-            <div class="summary-item">
-                <h4>Total Electricity</h4>
-                <p>11,764 Unit</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <h3>Production Overview</h3>
-                    <canvas id="productionChart"></canvas>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Products Grid -->
+        <section class="products">
+            <div class="product-grid">
+                <!-- Cashew Box -->
+                <div class="product-box">
+                    <div class="product-icon">🥜</div>
+                    <h3>Cashew</h3>
+                </div>
+                
+                <!-- Numkim Box -->
+                <div class="product-box">
+                    <div class="product-icon">🍚</div>
+                    <h3>Numkim</h3>
+                </div>
+                
+                <!-- Mixture Box -->
+                <div class="product-box">
+                    <div class="product-icon">🍱</div>
+                    <h3>Mixture</h3>
+                </div>
+                
+                <!-- Rice Box -->
+                <div class="product-box">
+                    <div class="product-icon">🍚</div>
+                    <h3>Rice</h3>
+                </div>
+                
+                <!-- Pulses Box -->
+                <div class="product-box">
+                    <div class="product-icon">🌰</div>
+                    <h3>Pulses</h3>
+                </div>
+                
+                <!-- Pampada Pickels Box -->
+                <div class="product-box">
+                    <div class="product-icon">🥒</div>
+                    <h3>Pampada Pickels</h3>
+                </div>
+                
+                <!-- Chakli Box -->
+                <div class="product-box">
+                    <div class="product-icon">🥨</div>
+                    <h3>Chakli</h3>
+                </div>
+                
+                <!-- Additional Box (if needed) -->
+                <div class="product-box">
+                    <div class="product-icon">🍯</div>
+                    <h3>Special Items</h3>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <h3>Resource Consumption</h3>
-                    <canvas id="consumptionChart"></canvas>
+        </section>
+    </main>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Parts Section -->
+                <div class="footer-section">
+                    <h3>Our Product Parts</h3>
+                    <ul>
+                        <li>Cashew - Premium Quality</li>
+                        <li>Numkim - Traditional Recipe</li>
+                        <li>Mixture - Spicy & Tasty</li>
+                        <li>Rice - Farm Fresh</li>
+                        <li>Pulses - Organic Variety</li>
+                        <li>Pampada Pickels - Homemade</li>
+                        <li>Chakli - Crispy Snacks</li>
+                        <li>Special Items - Seasonal</li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <p><span class="contact-icon">📞</span> Mobile: +91 98765 43210</p>
+                        <p><span class="contact-icon">📱</span> WhatsApp: +91 97654 32109</p>
+                        <p><span class="contact-icon">✉️</span> Email: info@village-test.com</p>
+                        <p><span class="contact-icon">🏠</span> Address: Village Test Center, Main Road, District, State - 123456</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <h3>VRM Production Details</h3>
-                    <table>
-                        <tr>
-                            <th>Week</th>
-                            <th>Production</th>
-                            <th>Working Hours</th>
-                            <th>Efficiency (Prod/Hr)</th>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>47.3</td>
-                            <td>2.9</td>
-                            <td>16.31</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>88.7</td>
-                            <td>4.53</td>
-                            <td>19.58</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>43.7</td>
-                            <td>2.4</td>
-                            <td>18.21</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>33</td>
-                            <td>1.8</td>
-                            <td>18.33</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td>71.4</td>
-                            <td>3.75</td>
-                            <td>19.04</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td>34.25</td>
-                            <td>1.85</td>
-                            <td>18.51</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <h3>Dry Production Details</h3>
-                    <table>
-                        <tr>
-                            <th>Week</th>
-                            <th>Production</th>
-                            <th>Working Hours</th>
-                            <th>Efficiency (Prod/Hr)</th>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>47</td>
-                            <td>7.1</td>
-                            <td>6.62</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>93</td>
-                            <td>9</td>
-                            <td>10.33</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>37</td>
-                            <td>3</td>
-                            <td>12.33</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>32</td>
-                            <td>2</td>
-                            <td>16.00</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td>67</td>
-                            <td>4</td>
-                            <td>16.75</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td>66</td>
-                            <td>4</td>
-                            <td>16.50</td>
-                        </tr>
-                    </table>
-                </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Village Test in Action System. All rights reserved.</p>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <h3>Dispatch & NMR</h3>
-                    <table>
-                        <tr>
-                            <th>Week</th>
-                            <th>Dispatch Qty</th>
-                            <th>NMR Count</th>
-                            <th>JCB Hours</th>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>95.34</td>
-                            <td>21</td>
-                            <td>9</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>60.7</td>
-                            <td>20</td>
-                            <td>15</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>24.03</td>
-                            <td>17</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>30.8</td>
-                            <td>9</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td>60.1</td>
-                            <td>20</td>
-                            <td>12.5</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td>56</td>
-                            <td>14</td>
-                            <td>8.5</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <h3>Raw Material Received</h3>
-                    <table>
-                        <tr>
-                            <th>Week</th>
-                            <th>SGX Slurry</th>
-                            <th>RWM-1 RH</th>
-                            <th>RWM-2 OPC</th>
-                            <th>Total</th>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>33.2</td>
-                            <td>30</td>
-                            <td>5</td>
-                            <td>68.2</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>31.2</td>
-                            <td>35</td>
-                            <td>7.5</td>
-                            <td>73.7</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>7.5</td>
-                            <td>7.5</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td>61.3</td>
-                            <td>30</td>
-                            <td>37</td>
-                            <td>128.3</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Production Chart
-        const productionCtx = document.getElementById('productionChart').getContext('2d');
-        const productionChart = new Chart(productionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Week 9', 'Week 10', 'Week 11', 'Week 12', 'Week 13', 'Week 14'],
-                datasets: [
-                    {
-                        label: 'VRM Production',
-                        data: [47.3, 88.7, 43.7, 33, 71.4, 34.25],
-                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Dry Production',
-                        data: [47, 93, 37, 32, 67, 66],
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Dispatch Qty',
-                        data: [95.34, 60.7, 24.03, 30.8, 60.1, 56],
-                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        type: 'line',
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Quantity'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Consumption Chart
-        const consumptionCtx = document.getElementById('consumptionChart').getContext('2d');
-        const consumptionChart = new Chart(consumptionCtx, {
-            type: 'line',
-            data: {
-                labels: ['Week 9', 'Week 10', 'Week 11', 'Week 12', 'Week 13', 'Week 14'],
-                datasets: [
-                    {
-                        label: 'Fuel Consumed (Ltr)',
-                        data: [90, 15, 190, 110, 255, 190],
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderColor: 'rgba(255, 159, 64, 1)',
-                        borderWidth: 2,
-                        yAxisID: 'y'
-                    },
-                    {
-                        label: 'Electricity (Unit)',
-                        data: [2032, 3052, 1664, 1356, 2400, 1260],
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 2,
-                        yAxisID: 'y1'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Fuel (Ltr)'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Electricity (Unit)'
-                        },
-                        grid: {
-                            drawOnChartArea: false
-                        }
-                    }
-                }
-            }
-        });
-    </script>
+    </footer>
 </body>
 </html>
