@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Village Taste offers premium, organic village products like cashews, ghee, pickles, and more, crafted with traditional recipes.">
+    <meta name="keywords" content="village products, organic food, cashews, ghee, pickles, traditional recipes">
+    <meta name="author" content="The Village Taste">
     <title>The Village Taste</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" async>
     <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #4caf50;
+            --accent-color: #ff9800;
+            --accent-dark: #f57c00;
+            --secondary-light: #a5d6a7;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background: linear-gradient(to bottom, #f5f9ee, #e6f2d5);
             color: #333;
@@ -22,13 +33,13 @@
             flex-direction: column;
             transition: background-color 0.5s ease;
         }
-        
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -36,16 +47,18 @@
             padding: 20px 0;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             transition: all 0.5s ease;
         }
-        
+
         .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         header h1 {
             font-size: 2.5rem;
             text-transform: uppercase;
@@ -55,12 +68,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-        
+
         header h1:hover {
             transform: scale(1.05);
             text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
         }
-        
+
         /* Floating Action Button */
         .floating-action-btn {
             position: fixed;
@@ -80,18 +93,99 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-        
+
         .floating-action-btn:hover {
             transform: scale(1.1) rotate(90deg);
             box-shadow: 0 6px 25px rgba(0,0,0,0.35);
         }
-        
+
+        .cart-counter {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .cart-modal-content h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item button {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-item button:hover {
+            background: #b71c1c;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
         /* Products Grid Styles */
         .products {
             padding: 40px 0;
             flex: 1;
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 40px;
@@ -99,7 +193,7 @@
             font-size: 2rem;
             position: relative;
         }
-        
+
         .section-title:after {
             content: '';
             display: block;
@@ -109,31 +203,31 @@
             margin: 10px auto;
             border-radius: 2px;
         }
-        
+
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
-        
+
         .product-box {
             background: white;
             border-radius: 15px;
-            padding: 35px 25px; /* Increased padding for larger boxes */
+            padding: 35px 25px;
             text-align: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 330px; /* Increased from 280px to 330px (approx 20%) */
+            min-height: 330px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        
+
         .product-box:before {
             content: '';
             position: absolute;
@@ -146,86 +240,106 @@
             transform-origin: left;
             transition: transform 0.3s ease;
         }
-        
+
         .product-box:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 25px rgba(0,0,0,0.15);
         }
-        
+
         .product-box:hover:before {
             transform: scaleX(1);
         }
-        
+
         .product-box h3 {
-            font-size: 1.8rem; /* Slightly increased font size */
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin-top: 20px;
             font-weight: 600;
         }
-        
+
         .product-icon {
-            font-size: 4rem; /* Increased from 3.5rem to 4rem */
-            margin-bottom: 20px; /* Increased margin */
+            font-size: 4rem;
+            margin-bottom: 20px;
             color: var(--secondary-color);
             transition: all 0.3s ease;
         }
-        
+
         .product-box:hover .product-icon {
             transform: scale(1.2) rotate(5deg);
         }
-        
+
         .product-desc {
             color: #666;
-            font-size: 1.1rem; /* Slightly increased font size */
-            margin-top: 20px; /* Increased margin */
+            font-size: 1.1rem;
+            margin-top: 20px;
             display: none;
             line-height: 1.5;
         }
-        
+
         .product-box.active .product-desc {
             display: block;
             animation: fadeIn 0.5s ease;
         }
-        
+
         .product-price {
             font-weight: bold;
             color: var(--accent-color);
-            margin-top: 15px; /* Increased margin */
-            font-size: 1.3rem; /* Slightly increased font size */
+            margin-top: 15px;
+            font-size: 1.3rem;
             display: none;
         }
-        
+
         .product-box.active .product-price {
             display: block;
         }
-        
+
+        .add-to-cart {
+            background: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            border: none;
+            display: none;
+            transition: background 0.3s ease;
+        }
+
+        .product-box.active .add-to-cart {
+            display: inline-block;
+        }
+
+        .add-to-cart:hover {
+            background: var(--accent-dark);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         /* Footer Styles */
         footer {
             background: var(--primary-color);
             color: white;
             padding: 40px 0 20px;
-            margin-top: 40px;
-            transition: all 0.5s ease;
+            margin-top: auto;
         }
-        
+
         .footer-content {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
-        
+
         .footer-section {
             flex: 1;
             min-width: 300px;
             margin-bottom: 30px;
             padding: 0 20px;
         }
-        
+
         .footer-section h3 {
             font-size: 1.5rem;
             margin-bottom: 20px;
@@ -233,33 +347,33 @@
             padding-bottom: 10px;
             display: inline-block;
         }
-        
+
         .footer-section ul {
             list-style: none;
         }
-        
+
         .footer-section ul li {
             margin-bottom: 12px;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
         }
-        
+
         .footer-section ul li i {
             margin-right: 10px;
             color: var(--secondary-light);
         }
-        
+
         .contact-info {
             margin-top: 15px;
         }
-        
+
         .contact-info p {
             margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
-        
+
         .contact-icon {
             margin-right: 10px;
             font-size: 1.2rem;
@@ -267,56 +381,50 @@
             width: 25px;
             text-align: center;
         }
-        
+
         .copyright {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.2);
         }
-        
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .product-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             }
         }
-        
-        @media (max-width: 992px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
+
         @media (max-width: 768px) {
             .product-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 20px;
             }
-            
+
             .product-box {
-                padding: 30px 20px; /* Adjusted for mobile */
-                min-height: 300px; /* Adjusted for mobile */
+                padding: 30px 20px;
+                min-height: 300px;
             }
-            
+
             header h1 {
                 font-size: 2rem;
             }
-            
+
             .section-title {
                 font-size: 1.8rem;
             }
         }
-        
+
         @media (max-width: 576px) {
             .product-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .footer-section {
                 min-width: 100%;
             }
-            
+
             .floating-action-btn {
                 bottom: 20px;
                 right: 20px;
@@ -324,15 +432,19 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
+
+            .cart-modal-content {
+                width: 95%;
+            }
         }
-        
+
         /* Animation for title */
         @keyframes titlePulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
+
         .title-animate {
             animation: titlePulse 0.5s ease;
         }
@@ -343,107 +455,171 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <h1 id="mainTitle">The Village Taste</h1>
+                <h1 id="mainTitle" role="banner">The Village Taste</h1>
             </div>
         </div>
     </header>
-    
+
     <!-- Main Content -->
     <main class="container">
         <!-- Products Grid -->
-        <section class="products">
-            <h2 class="section-title">Our Village Products</h2>
+        <section class="products" aria-labelledby="products-title">
+            <h2 class="section-title" id="products-title">Our Village Products</h2>
             <div class="product-grid">
-                <!-- Row 1 -->
-                <!-- Cashew Box -->
-                <div class="product-box">
-                    <div class="product-icon">🥜</div>
-                    <h3>Cashew</h3>
-                    <p class="product-desc">Premium quality cashews, handpicked and sun-dried for perfect flavor and crunch.</p>
-                    <p class="product-price">₹650/kg</p>
+                <!-- Whole Cashews (W180) -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Whole Cashews W180 product details">
+                    <div class="product-icon" aria-hidden="true">🥜</div>
+                    <h3>Whole Cashews (W180)</h3>
+                    <p class="product-desc">Premium large W180 cashews, handpicked and sun-dried for superior flavor and crunch.</p>
+                    <p class="product-price">₹800/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
+                <!-- Roasted & Salted Cashews -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Roasted and Salted Cashews product details">
+                    <div class="product-icon" aria-hidden="true">🥜</div>
+                    <h3>Roasted & Salted Cashews</h3>
+                    <p class="product-desc">Crispy cashews roasted to perfection with a light sea salt seasoning.</p>
+                    <p class="product-price">₹700/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
+                <!-- Masala Cashews -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Masala Cashews product details">
+                    <div class="product-icon" aria-hidden="true">🌶️</div>
+                    <h3>Masala Cashews</h3>
+                    <p class="product-desc">Spicy and tangy cashews coated with authentic Indian masala spices.</p>
+                    <p class="product-price">₹750/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
+                <!-- Honey Roasted Cashews -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Honey Roasted Cashews product details">
+                    <div class="product-icon" aria-hidden="true">🍯</div>
+                    <h3>Honey Roasted Cashews</h3>
+                    <p class="product-desc">Sweet and crunchy cashews roasted with natural honey for a delightful treat.</p>
+                    <p class="product-price">₹780/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
+                <!-- Cashew Butter -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Cashew Butter product details">
+                    <div class="product-icon" aria-hidden="true">🧈</div>
+                    <h3>Cashew Butter</h3>
+                    <p class="product-desc">Creamy, smooth cashew butter made from premium cashews, perfect for spreads.</p>
+                    <p class="product-price">₹600/500g</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
+                <!-- Cashew Powder -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Cashew Powder product details">
+                    <div class="product-icon" aria-hidden="true">🍶</div>
+                    <h3>Cashew Powder</h3>
+                    <p class="product-desc">Finely ground cashew powder, ideal for gluten-free baking and cooking.</p>
+                    <p class="product-price">₹550/500g</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
                 <!-- Peanuts Box -->
-                <div class="product-box">
-                    <div class="product-icon">🥜</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Peanuts product details">
+                    <div class="product-icon" aria-hidden="true">🥜</div>
                     <h3>Peanuts</h3>
                     <p class="product-desc">Fresh, crunchy peanuts roasted to perfection with just the right amount of salt.</p>
                     <p class="product-price">₹120/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Ghee Box -->
-                <div class="product-box">
-                    <div class="product-icon">🫙</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Pure Ghee product details">
+                    <div class="product-icon" aria-hidden="true">🫙</div>
                     <h3>Pure Ghee</h3>
                     <p class="product-desc">100% pure desi ghee made from cow's milk using traditional methods.</p>
                     <p class="product-price">₹550/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Numkim Box -->
-                <div class="product-box">
-                    <div class="product-icon">🍚</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Numkim product details">
+                    <div class="product-icon" aria-hidden="true">🍚</div>
                     <h3>Numkim</h3>
                     <p class="product-desc">Traditional recipe with authentic spices and ingredients for that perfect taste.</p>
                     <p class="product-price">₹85/pack</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Mixture Box -->
-                <div class="product-box">
-                    <div class="product-icon">🍱</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Mixture product details">
+                    <div class="product-icon" aria-hidden="true">🍱</div>
                     <h3>Mixture</h3>
                     <p class="product-desc">A delightful blend of crispy elements with just the right amount of spices.</p>
                     <p class="product-price">₹90/pack</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
-                <!-- Row 2 -->
+
                 <!-- Rice Box -->
-                <div class="product-box">
-                    <div class="product-icon">🍚</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Rice product details">
+                    <div class="product-icon" aria-hidden="true">🍚</div>
                     <h3>Rice</h3>
                     <p class="product-desc">Farm-fresh, organic rice varieties grown with sustainable farming practices.</p>
                     <p class="product-price">₹55/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Pulses Box -->
-                <div class="product-box">
-                    <div class="product-icon">🌰</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Pulses product details">
+                    <div class="product-icon" aria-hidden="true">🌰</div>
                     <h3>Pulses</h3>
                     <p class="product-desc">Nutrient-rich pulses, a perfect source of protein for your daily diet.</p>
                     <p class="product-price">₹80/kg</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
-                <!-- Pampada Pickels Box -->
-                <div class="product-box">
-                    <div class="product-icon">🥒</div>
-                    <h3>Pampada Pickels</h3>
+
+                <!-- Pampada Pickles Box -->
+                <div class="product-box" role="button" tabindex="0" aria-label="Pampada Pickles product details">
+                    <div class="product-icon" aria-hidden="true">🥒</div>
+                    <h3>Pampada Pickles</h3>
                     <p class="product-desc">Homemade pickles with traditional recipes passed down through generations.</p>
                     <p class="product-price">₹200/jar</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Chakli Box -->
-                <div class="product-box">
-                    <div class="product-icon">🥨</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Chakli product details">
+                    <div class="product-icon" aria-hidden="true">🥨</div>
                     <h3>Chakli</h3>
                     <p class="product-desc">Crispy, spiral snacks made from finest ingredients and authentic recipes.</p>
                     <p class="product-price">₹110/pack</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
-                
+
                 <!-- Special Box -->
-                <div class="product-box">
-                    <div class="product-icon">🍯</div>
+                <div class="product-box" role="button" tabindex="0" aria-label="Special Items product details">
+                    <div class="product-icon" aria-hidden="true">🍯</div>
                     <h3>Special Items</h3>
                     <p class="product-desc">Seasonal and special village products that are unique to our region.</p>
                     <p class="product-price">Varies</p>
+                    <button class="add-to-cart">Add to Cart</button>
                 </div>
             </div>
         </section>
     </main>
-    
+
     <!-- Floating Action Button -->
-    <div class="floating-action-btn" id="floatingBtn">
-        <i class="fas fa-shopping-cart"></i>
+    <div class="floating-action-btn" id="floatingBtn" role="button" aria-label="View shopping cart">
+        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+        <span class="cart-counter" id="cartCounter">0</span>
     </div>
-    
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <p id="cartEmpty" style="display: none;">Your cart is empty!</p>
+        </div>
+    </div>
+
     <!-- Footer Section -->
     <footer>
         <div class="container">
@@ -452,33 +628,38 @@
                 <div class="footer-section">
                     <h3>Our Product Parts</h3>
                     <ul>
-                        <li><i class="fas fa-check-circle"></i> Cashew - Premium Quality</li>
-                        <li><i class="fas fa-check-circle"></i> Peanuts - Fresh & Crunchy</li>
-                        <li><i class="fas fa-check-circle"></i> Pure Ghee - Traditional</li>
-                        <li><i class="fas fa-check-circle"></i> Numkim - Authentic Recipe</li>
-                        <li><i class="fas fa-check-circle"></i> Mixture - Spicy & Tasty</li>
-                        <li><i class="fas fa-check-circle"></i> Rice - Farm Fresh</li>
-                        <li><i class="fas fa-check-circle"></i> Pulses - Organic Variety</li>
-                        <li><i class="fas fa-check-circle"></i> Pampada Pickels - Homemade</li>
-                        <li><i class="fas fa-check-circle"></i> Chakli - Crispy Snacks</li>
-                        <li><i class="fas fa-check-circle"></i> Special Items - Seasonal</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Whole Cashews (W180) - Premium Quality</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Roasted & Salted Cashews - Crunchy</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Masala Cashews - Spicy & Tangy</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Honey Roasted Cashews - Sweet Treat</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Cashew Butter - Creamy Spread</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Cashew Powder - Versatile Ingredient</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Peanuts - Fresh & Crunchy</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Pure Ghee - Traditional</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Numkim - Authentic Recipe</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Mixture - Spicy & Tasty</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Rice - Farm Fresh</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Pulses - Organic Variety</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Pampada Pickles - Homemade</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Chakli - Crispy Snacks</li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i> Special Items - Seasonal</li>
                     </ul>
                 </div>
-                
+
                 <!-- Contact Section -->
                 <div class="footer-section">
                     <h3>Contact Us</h3>
                     <div class="contact-info">
-                        <p><span class="contact-icon"><i class="fas fa-phone"></i></span> +91 98765 43210</p>
-                        <p><span class="contact-icon"><i class="fab fa-whatsapp"></i></span> +91 97654 32109</p>
-                        <p><span class="contact-icon"><i class="fas fa-envelope"></i></span> info@villagetaste.com</p>
-                        <p><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span> Village Taste Center, Main Road, District, State - 123456</p>
+                        <p><span class="contact-icon"><i class="fas fa-phone" aria-hidden="true"></i></span> <a href="tel:+919876543210">+91 98765 43210</a></p>
+                        <p><span class="contact-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span> <a href="https://wa.me/919765432109">+91 97654 32109</a></p>
+                        <p><span class="contact-icon"><i class="fas fa-envelope" aria-hidden="true"></i></span> <a href="mailto:info@villagetaste.com">info@villagetaste.com</a></p>
+                        <p><span class="contact-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span> Village Taste Center, Main Road, District, State - 123456</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="copyright">
-                <p>&copy; 2023 The Village Taste. All rights reserved.</p>
+                <p>&copy; 2025 The Village Taste. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -486,10 +667,10 @@
     <script>
         // Define CSS variables for color scheme
         const root = document.documentElement;
-        
+
         // Set initial color scheme
         setColorScheme('#2e7d32', '#4caf50', '#ff9800', '#f57c00', '#a5d6a7');
-        
+
         // Function to set color scheme
         function setColorScheme(primary, secondary, accent, accentDark, secondaryLight) {
             root.style.setProperty('--primary-color', primary);
@@ -498,7 +679,7 @@
             root.style.setProperty('--accent-dark', accentDark);
             root.style.setProperty('--secondary-light', secondaryLight);
         }
-        
+
         // Random color generator
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
@@ -508,81 +689,154 @@
             }
             return color;
         }
-        
+
         // Function to generate a complementary color
         function getComplementaryColor(hex) {
-            // Convert hex to RGB
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
             let b = parseInt(hex.slice(5, 7), 16);
-            
-            // Calculate complementary color
+
             r = (255 - r).toString(16).padStart(2, '0');
             g = (255 - g).toString(16).padStart(2, '0');
             b = (255 - b).toString(16).padStart(2, '0');
-            
+
             return `#${r}${g}${b}`;
         }
-        
-        // Function to generate a slightly lighter version of a color
-        function getLighterColor(hex, percent) {
-            // Convert hex to RGB
+
+        // Function to generate a lighter/darker color
+        function adjustColor(hex, percent) {
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
             let b = parseInt(hex.slice(5, 7), 16);
-            
-            // Lighten each component
+
             r = Math.min(255, Math.floor(r + (255 - r) * percent)).toString(16).padStart(2, '0');
             g = Math.min(255, Math.floor(g + (255 - g) * percent)).toString(16).padStart(2, '0');
             b = Math.min(255, Math.floor(b + (255 - b) * percent)).toString(16).padStart(2, '0');
-            
+
             return `#${r}${g}${b}`;
         }
-        
-        // Function to change colors automatically
+
+        // Change color scheme automatically
         function changeColorsAutomatically() {
             const primary = getRandomColor();
             const secondary = getComplementaryColor(primary);
             const accent = getRandomColor();
-            const accentDark = getLighterColor(accent, -0.3);
-            const secondaryLight = getLighterColor(secondary, 0.7);
-            
+            const accentDark = adjustColor(accent, -0.2);
+            const secondaryLight = adjustColor(secondary, 0.6);
+
             setColorScheme(primary, secondary, accent, accentDark, secondaryLight);
-            
-            // Add animation to title
+
             const title = document.getElementById('mainTitle');
             title.classList.add('title-animate');
-            
-            // Remove animation class after animation completes
-            setTimeout(() => {
-                title.classList.remove('title-animate');
-            }, 500);
+            setTimeout(() => title.classList.remove('title-animate'), 500);
         }
-        
-        // Change color scheme automatically every 3 seconds
-        setInterval(changeColorsAutomatically, 3000);
-        
-        // Floating action button functionality
-        document.getElementById('floatingBtn').addEventListener('click', function() {
-            alert('Your cart is empty!\nAdd products to your cart first.');
-        });
-        
+
+        // Change colors every 5 seconds
+        setInterval(changeColorsAutomatically, 5000);
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCounter = document.getElementById('cartCounter');
+        const cartModal = document.getElementById('cartModal');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartEmptyMessage = document.getElementById('cartEmpty');
+        const closeModal = document.getElementById('closeModal');
+
+        // Update cart counter
+        function updateCartCounter() {
+            cartCounter.textContent = cart.length;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartModal();
+        }
+
+        // Update cart modal
+        function updateCartModal() {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartEmptyMessage.style.display = 'block';
+            } else {
+                cartEmptyMessage.style.display = 'none';
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    cartItem.innerHTML = `
+                        <span>${item.name} - ${item.price}</span>
+                        <button onclick="removeFromCart(${index})">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+        }
+
+        // Add to cart
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartCounter();
+            alert(`${name} added to cart!`);
+        }
+
+        // Remove from cart
+        window.removeFromCart = function(index) {
+            cart.splice(index, 1);
+            updateCartCounter();
+        };
+
         // Product box functionality
         const productBoxes = document.querySelectorAll('.product-box');
-        
         productBoxes.forEach(box => {
-            box.addEventListener('click', function() {
-                // Toggle active class to show/hide description
-                this.classList.toggle('active');
-                
-                // Close other open boxes
-                productBoxes.forEach(otherBox => {
-                    if (otherBox !== this && otherBox.classList.contains('active')) {
-                        otherBox.classList.remove('active');
-                    }
-                });
+            const addToCartBtn = box.querySelector('.add-to-cart');
+            box.addEventListener('click', function(e) {
+                if (e.target !== addToCartBtn) {
+                    this.classList.toggle('active');
+                    productBoxes.forEach(otherBox => {
+                        if (otherBox !== this && otherBox.classList.contains('active')) {
+                            otherBox.classList.remove('active');
+                        }
+                    });
+                }
+            });
+
+            // Handle keyboard accessibility
+            box.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    productBoxes.forEach(otherBox => {
+                        if (otherBox !== this && otherBox.classList.contains('active')) {
+                            otherBox.classList.remove('active');
+                        }
+                    });
+                }
+            });
+
+            // Add to cart functionality
+            addToCartBtn.addEventListener('click', () => {
+                const name = box.querySelector('h3').textContent;
+                const price = box.querySelector('.product-price').textContent;
+                addToCart(name, price);
             });
         });
+
+        // Floating action button functionality
+        document.getElementById('floatingBtn').addEventListener('click', function() {
+            cartModal.style.display = 'flex';
+            updateCartModal();
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        cartModal.addEventListener('click', function(e) {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+
+        // Initialize cart counter
+        updateCartCounter();
     </script>
 </body>
 </html>
