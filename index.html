@@ -16,14 +16,12 @@
             --accent-dark: #f57c00;
             --secondary-light: #a5d6a7;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
             background: linear-gradient(to bottom, #f5f9ee, #e6f2d5);
             color: #333;
@@ -33,13 +31,11 @@
             flex-direction: column;
             transition: background-color 0.5s ease;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
         /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -52,13 +48,11 @@
             z-index: 1000;
             transition: all 0.5s ease;
         }
-
         .header-content {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
         header h1 {
             font-size: 2.5rem;
             text-transform: uppercase;
@@ -68,12 +62,65 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         header h1:hover {
             transform: scale(1.05);
             text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
         }
-
+        /* Category Filter */
+        .category-filter {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        .category-btn {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s facilidad;
+        }
+        .category-btn:hover {
+            background: var(--primary-color);
+        }
+        .category-btn.active {
+            background: var(--accent-color);
+        }
+        .cashew-submenu {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            padding: 10px;
+            z-index: 1000;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .cashew-submenu.active {
+            display: block;
+        }
+        .cashew-submenu button {
+            display: block;
+            width: 100%;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border: none;
+            background: var(--secondary-light);
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.3s ease;
+        }
+        .cashew-submenu button:hover {
+            background: var(--accent-color);
+            color: white;
+        }
         /* Floating Action Button */
         .floating-action-btn {
             position: fixed;
@@ -93,12 +140,10 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-
         .floating-action-btn:hover {
             transform: scale(1.1) rotate(90deg);
             box-shadow: 0 6px 25px rgba(0,0,0,0.35);
         }
-
         .cart-counter {
             position: absolute;
             top: -10px;
@@ -114,7 +159,6 @@
             font-size: 0.9rem;
             font-weight: bold;
         }
-
         /* Cart Modal */
         .cart-modal {
             display: none;
@@ -128,24 +172,21 @@
             align-items: center;
             justify-content: center;
         }
-
         .cart-modal-content {
             background: white;
             border-radius: 15px;
             padding: 20px;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
         }
-
         .cart-modal-content h2 {
             font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 20px;
         }
-
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -153,11 +194,9 @@
             padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
-
         .cart-item:last-child {
             border-bottom: none;
         }
-
         .cart-item button {
             background: #d32f2f;
             color: white;
@@ -166,11 +205,49 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         .cart-item button:hover {
             background: #b71c1c;
         }
-
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-controls button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .quantity-controls button:hover {
+            background: var(--accent-dark);
+        }
+        .order-summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        .order-summary p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+        .place-order-btn {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        .place-order-btn:hover {
+            background: var(--primary-color);
+        }
         .close-modal {
             position: absolute;
             top: 10px;
@@ -179,13 +256,11 @@
             cursor: pointer;
             color: #333;
         }
-
         /* Products Grid Styles */
         .products {
             padding: 40px 0;
             flex: 1;
         }
-
         .section-title {
             text-align: center;
             margin-bottom: 40px;
@@ -193,7 +268,6 @@
             font-size: 2rem;
             position: relative;
         }
-
         .section-title:after {
             content: '';
             display: block;
@@ -203,14 +277,12 @@
             margin: 10px auto;
             border-radius: 2px;
         }
-
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 30px;
             margin-top: 30px;
         }
-
         .product-box {
             background: white;
             border-radius: 15px;
@@ -227,7 +299,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .product-box:before {
             content: '';
             position: absolute;
@@ -240,34 +311,28 @@
             transform-origin: left;
             transition: transform 0.3s ease;
         }
-
         .product-box:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 25px rgba(0,0,0,0.15);
         }
-
         .product-box:hover:before {
             transform: scaleX(1);
         }
-
         .product-box h3 {
             font-size: 1.8rem;
             color: var(--primary-color);
             margin-top: 20px;
             font-weight: 600;
         }
-
         .product-icon {
             font-size: 4rem;
             margin-bottom: 20px;
             color: var(--secondary-color);
             transition: all 0.3s ease;
         }
-
         .product-box:hover .product-icon {
             transform: scale(1.2) rotate(5deg);
         }
-
         .product-desc {
             color: #666;
             font-size: 1.1rem;
@@ -275,12 +340,10 @@
             display: none;
             line-height: 1.5;
         }
-
         .product-box.active .product-desc {
             display: block;
             animation: fadeIn 0.5s ease;
         }
-
         .product-price {
             font-weight: bold;
             color: var(--accent-color);
@@ -288,11 +351,9 @@
             font-size: 1.3rem;
             display: none;
         }
-
         .product-box.active .product-price {
             display: block;
         }
-
         .add-to-cart {
             background: var(--accent-color);
             color: white;
@@ -305,20 +366,16 @@
             display: none;
             transition: background 0.3s ease;
         }
-
         .product-box.active .add-to-cart {
             display: inline-block;
         }
-
         .add-to-cart:hover {
             background: var(--accent-dark);
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         /* Footer Styles */
         footer {
             background: var(--primary-color);
@@ -326,20 +383,17 @@
             padding: 40px 0 20px;
             margin-top: auto;
         }
-
         .footer-content {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
-
         .footer-section {
             flex: 1;
             min-width: 300px;
             margin-bottom: 30px;
             padding: 0 20px;
         }
-
         .footer-section h3 {
             font-size: 1.5rem;
             margin-bottom: 20px;
@@ -347,33 +401,27 @@
             padding-bottom: 10px;
             display: inline-block;
         }
-
         .footer-section ul {
             list-style: none;
         }
-
         .footer-section ul li {
             margin-bottom: 12px;
             font-size: 1.1rem;
             display: flex;
             align-items: center;
         }
-
         .footer-section ul li i {
             margin-right: 10px;
             color: var(--secondary-light);
         }
-
         .contact-info {
             margin-top: 15px;
         }
-
         .contact-info p {
             margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
-
         .contact-icon {
             margin-right: 10px;
             font-size: 1.2rem;
@@ -381,50 +429,41 @@
             width: 25px;
             text-align: center;
         }
-
         .copyright {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.2);
         }
-
         /* Responsive Design */
         @media (max-width: 1200px) {
             .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-
         @media (max-width: 768px) {
             .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
             }
-
             .product-box {
                 padding: 30px 20px;
                 min-height: 300px;
             }
-
             header h1 {
                 font-size: 2rem;
             }
-
             .section-title {
                 font-size: 1.8rem;
             }
         }
-
         @media (max-width: 576px) {
             .product-grid {
                 grid-template-columns: 1fr;
             }
-
             .footer-section {
                 min-width: 100%;
             }
-
             .floating-action-btn {
                 bottom: 20px;
                 right: 20px;
@@ -432,19 +471,21 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
-
             .cart-modal-content {
                 width: 95%;
             }
+            .cashew-submenu {
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
-
         /* Animation for title */
         @keyframes titlePulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
         .title-animate {
             animation: titlePulse 0.5s ease;
         }
@@ -462,138 +503,126 @@
 
     <!-- Main Content -->
     <main class="container">
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="category-btn active" data-category="all">All Products</button>
+            <button class="category-btn" data-category="cashew" id="cashewBtn">Cashews</button>
+            <div class="cashew-submenu" id="cashewSubmenu">
+                <button data-subcategory="Whole Cashews (W180)">Whole Cashews (W180)</button>
+                <button data-subcategory="Roasted & Salted Cashews">Roasted & Salted Cashews</button>
+                <button data-subcategory="Masala Cashews">Masala Cashews</button>
+                <button data-subcategory="Honey Roasted Cashews">Honey Roasted Cashews</button>
+                <button data-subcategory="Cashew Butter">Cashew Butter</button>
+                <button data-subcategory="Cashew Powder">Cashew Powder</button>
+            </div>
+        </div>
+
         <!-- Products Grid -->
         <section class="products" aria-labelledby="products-title">
             <h2 class="section-title" id="products-title">Our Village Products</h2>
             <div class="product-grid">
-                <!-- Whole Cashews (W180) -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Whole Cashews W180 product details">
+                <!-- Row 1 -->
+                <div class="product-box" data-category="cashew" data-subcategory="Whole Cashews (W180)" role="button" tabindex="0" aria-label="Whole Cashews W180 product details">
                     <div class="product-icon" aria-hidden="true">🥜</div>
                     <h3>Whole Cashews (W180)</h3>
                     <p class="product-desc">Premium large W180 cashews, handpicked and sun-dried for superior flavor and crunch.</p>
                     <p class="product-price">₹800/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Roasted & Salted Cashews -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Roasted and Salted Cashews product details">
+                <div class="product-box" data-category="cashew" data-subcategory="Roasted & Salted Cashews" role="button" tabindex="0" aria-label="Roasted and Salted Cashews product details">
                     <div class="product-icon" aria-hidden="true">🥜</div>
                     <h3>Roasted & Salted Cashews</h3>
                     <p class="product-desc">Crispy cashews roasted to perfection with a light sea salt seasoning.</p>
                     <p class="product-price">₹700/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Masala Cashews -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Masala Cashews product details">
+                <div class="product-box" data-category="cashew" data-subcategory="Masala Cashews" role="button" tabindex="0" aria-label="Masala Cashews product details">
                     <div class="product-icon" aria-hidden="true">🌶️</div>
                     <h3>Masala Cashews</h3>
                     <p class="product-desc">Spicy and tangy cashews coated with authentic Indian masala spices.</p>
                     <p class="product-price">₹750/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Honey Roasted Cashews -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Honey Roasted Cashews product details">
+                <div class="product-box" data-category="cashew" data-subcategory="Honey Roasted Cashews" role="button" tabindex="0" aria-label="Honey Roasted Cashews product details">
                     <div class="product-icon" aria-hidden="true">🍯</div>
                     <h3>Honey Roasted Cashews</h3>
                     <p class="product-desc">Sweet and crunchy cashews roasted with natural honey for a delightful treat.</p>
                     <p class="product-price">₹780/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Cashew Butter -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Cashew Butter product details">
+                <div class="product-box" data-category="cashew" data-subcategory="Cashew Butter" role="button" tabindex="0" aria-label="Cashew Butter product details">
                     <div class="product-icon" aria-hidden="true">🧈</div>
                     <h3>Cashew Butter</h3>
                     <p class="product-desc">Creamy, smooth cashew butter made from premium cashews, perfect for spreads.</p>
                     <p class="product-price">₹600/500g</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Cashew Powder -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Cashew Powder product details">
+                <!-- Row 2 -->
+                <div class="product-box" data-category="cashew" data-subcategory="Cashew Powder" role="button" tabindex="0" aria-label="Cashew Powder product details">
                     <div class="product-icon" aria-hidden="true">🍶</div>
                     <h3>Cashew Powder</h3>
                     <p class="product-desc">Finely ground cashew powder, ideal for gluten-free baking and cooking.</p>
                     <p class="product-price">₹550/500g</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Peanuts Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Peanuts product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Peanuts product details">
                     <div class="product-icon" aria-hidden="true">🥜</div>
                     <h3>Peanuts</h3>
                     <p class="product-desc">Fresh, crunchy peanuts roasted to perfection with just the right amount of salt.</p>
                     <p class="product-price">₹120/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Ghee Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Pure Ghee product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Pure Ghee product details">
                     <div class="product-icon" aria-hidden="true">🫙</div>
                     <h3>Pure Ghee</h3>
                     <p class="product-desc">100% pure desi ghee made from cow's milk using traditional methods.</p>
                     <p class="product-price">₹550/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Numkim Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Numkim product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Numkim product details">
                     <div class="product-icon" aria-hidden="true">🍚</div>
                     <h3>Numkim</h3>
                     <p class="product-desc">Traditional recipe with authentic spices and ingredients for that perfect taste.</p>
                     <p class="product-price">₹85/pack</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Mixture Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Mixture product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Mixture product details">
                     <div class="product-icon" aria-hidden="true">🍱</div>
                     <h3>Mixture</h3>
                     <p class="product-desc">A delightful blend of crispy elements with just the right amount of spices.</p>
                     <p class="product-price">₹90/pack</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Rice Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Rice product details">
+                <!-- Other Products -->
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Rice product details">
                     <div class="product-icon" aria-hidden="true">🍚</div>
                     <h3>Rice</h3>
                     <p class="product-desc">Farm-fresh, organic rice varieties grown with sustainable farming practices.</p>
                     <p class="product-price">₹55/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Pulses Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Pulses product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Pulses product details">
                     <div class="product-icon" aria-hidden="true">🌰</div>
                     <h3>Pulses</h3>
                     <p class="product-desc">Nutrient-rich pulses, a perfect source of protein for your daily diet.</p>
                     <p class="product-price">₹80/kg</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Pampada Pickles Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Pampada Pickles product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Pampada Pickles product details">
                     <div class="product-icon" aria-hidden="true">🥒</div>
                     <h3>Pampada Pickles</h3>
                     <p class="product-desc">Homemade pickles with traditional recipes passed down through generations.</p>
                     <p class="product-price">₹200/jar</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Chakli Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Chakli product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Chakli product details">
                     <div class="product-icon" aria-hidden="true">🥨</div>
                     <h3>Chakli</h3>
                     <p class="product-desc">Crispy, spiral snacks made from finest ingredients and authentic recipes.</p>
                     <p class="product-price">₹110/pack</p>
                     <button class="add-to-cart">Add to Cart</button>
                 </div>
-
-                <!-- Special Box -->
-                <div class="product-box" role="button" tabindex="0" aria-label="Special Items product details">
+                <div class="product-box" data-category="other" role="button" tabindex="0" aria-label="Special Items product details">
                     <div class="product-icon" aria-hidden="true">🍯</div>
                     <h3>Special Items</h3>
                     <p class="product-desc">Seasonal and special village products that are unique to our region.</p>
@@ -617,6 +646,11 @@
             <h2>Your Cart</h2>
             <div id="cartItems"></div>
             <p id="cartEmpty" style="display: none;">Your cart is empty!</p>
+            <div class="order-summary" id="orderSummary">
+                <p>Total Items: <span id="totalItems">0</span></p>
+                <p>Total Amount: ₹<span id="totalAmount">0</span></p>
+                <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+            </div>
         </div>
     </div>
 
@@ -624,7 +658,6 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- Parts Section -->
                 <div class="footer-section">
                     <h3>Our Product Parts</h3>
                     <ul>
@@ -645,8 +678,6 @@
                         <li><i class="fas fa-check-circle" aria-hidden="true"></i> Special Items - Seasonal</li>
                     </ul>
                 </div>
-
-                <!-- Contact Section -->
                 <div class="footer-section">
                     <h3>Contact Us</h3>
                     <div class="contact-info">
@@ -657,7 +688,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="copyright">
                 <p>&copy; 2025 The Village Taste. All rights reserved.</p>
             </div>
@@ -665,13 +695,9 @@
     </footer>
 
     <script>
-        // Define CSS variables for color scheme
+        // === Color Scheme Management ===
         const root = document.documentElement;
 
-        // Set initial color scheme
-        setColorScheme('#2e7d32', '#4caf50', '#ff9800', '#f57c00', '#a5d6a7');
-
-        // Function to set color scheme
         function setColorScheme(primary, secondary, accent, accentDark, secondaryLight) {
             root.style.setProperty('--primary-color', primary);
             root.style.setProperty('--secondary-color', secondary);
@@ -680,7 +706,6 @@
             root.style.setProperty('--secondary-light', secondaryLight);
         }
 
-        // Random color generator
         function getRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
@@ -690,98 +715,123 @@
             return color;
         }
 
-        // Function to generate a complementary color
         function getComplementaryColor(hex) {
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
             let b = parseInt(hex.slice(5, 7), 16);
-
             r = (255 - r).toString(16).padStart(2, '0');
             g = (255 - g).toString(16).padStart(2, '0');
             b = (255 - b).toString(16).padStart(2, '0');
-
             return `#${r}${g}${b}`;
         }
 
-        // Function to generate a lighter/darker color
         function adjustColor(hex, percent) {
             let r = parseInt(hex.slice(1, 3), 16);
             let g = parseInt(hex.slice(3, 5), 16);
             let b = parseInt(hex.slice(5, 7), 16);
-
             r = Math.min(255, Math.floor(r + (255 - r) * percent)).toString(16).padStart(2, '0');
             g = Math.min(255, Math.floor(g + (255 - g) * percent)).toString(16).padStart(2, '0');
             b = Math.min(255, Math.floor(b + (255 - b) * percent)).toString(16).padStart(2, '0');
-
             return `#${r}${g}${b}`;
         }
 
-        // Change color scheme automatically
         function changeColorsAutomatically() {
             const primary = getRandomColor();
             const secondary = getComplementaryColor(primary);
             const accent = getRandomColor();
             const accentDark = adjustColor(accent, -0.2);
             const secondaryLight = adjustColor(secondary, 0.6);
-
             setColorScheme(primary, secondary, accent, accentDark, secondaryLight);
-
             const title = document.getElementById('mainTitle');
             title.classList.add('title-animate');
             setTimeout(() => title.classList.remove('title-animate'), 500);
         }
 
-        // Change colors every 5 seconds
+        // Set initial color scheme and change every 5 seconds
+        setColorScheme('#2e7d32', '#4caf50', '#ff9800', '#f57c00', '#a5d6a7');
         setInterval(changeColorsAutomatically, 5000);
 
-        // Cart functionality
+        // === Cart Functionality ===
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const cartCounter = document.getElementById('cartCounter');
         const cartModal = document.getElementById('cartModal');
         const cartItemsContainer = document.getElementById('cartItems');
         const cartEmptyMessage = document.getElementById('cartEmpty');
         const closeModal = document.getElementById('closeModal');
+        const orderSummary = document.getElementById('orderSummary');
+        const totalItems = document.getElementById('totalItems');
+        const totalAmount = document.getElementById('totalAmount');
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
 
-        // Update cart counter
         function updateCartCounter() {
-            cartCounter.textContent = cart.length;
+            cartCounter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartModal();
         }
 
-        // Update cart modal
         function updateCartModal() {
             cartItemsContainer.innerHTML = '';
             if (cart.length === 0) {
                 cartEmptyMessage.style.display = 'block';
+                orderSummary.style.display = 'none';
             } else {
                 cartEmptyMessage.style.display = 'none';
+                orderSummary.style.display = 'block';
+                let total = 0;
+                let itemCount = 0;
                 cart.forEach((item, index) => {
+                    const price = parseFloat(item.price.replace(/[^0-9.]/g, '')) * item.quantity;
+                    total += price;
+                    itemCount += item.quantity;
                     const cartItem = document.createElement('div');
                     cartItem.classList.add('cart-item');
                     cartItem.innerHTML = `
-                        <span>${item.name} - ${item.price}</span>
-                        <button onclick="removeFromCart(${index})">Remove</button>
+                        <span>${item.name} - ${item.price} × ${item.quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="updateQuantity(${index}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                            <button onclick="removeFromCart(${index})">Remove</button>
+                        </div>
                     `;
                     cartItemsContainer.appendChild(cartItem);
                 });
+                totalItems.textContent = itemCount;
+                totalAmount.textContent = total.toFixed(2);
             }
         }
 
-        // Add to cart
         function addToCart(name, price) {
-            cart.push({ name, price });
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
             updateCartCounter();
             alert(`${name} added to cart!`);
         }
 
-        // Remove from cart
+        window.updateQuantity = function(index, change) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + change);
+            updateCartCounter();
+        };
+
         window.removeFromCart = function(index) {
             cart.splice(index, 1);
             updateCartCounter();
         };
 
-        // Product box functionality
+        placeOrderBtn.addEventListener('click', () => {
+            if (cart.length > 0) {
+                alert('Order placed successfully!\n' + cart.map(item => `${item.name} - ${item.price} × ${item.quantity}`).join('\n'));
+                cart = [];
+                updateCartCounter();
+                cartModal.style.display = 'none';
+            }
+        });
+
+        // === Product Box Functionality ===
         const productBoxes = document.querySelectorAll('.product-box');
         productBoxes.forEach(box => {
             const addToCartBtn = box.querySelector('.add-to-cart');
@@ -796,7 +846,6 @@
                 }
             });
 
-            // Handle keyboard accessibility
             box.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -809,7 +858,6 @@
                 }
             });
 
-            // Add to cart functionality
             addToCartBtn.addEventListener('click', () => {
                 const name = box.querySelector('h3').textContent;
                 const price = box.querySelector('.product-price').textContent;
@@ -817,25 +865,77 @@
             });
         });
 
-        // Floating action button functionality
-        document.getElementById('floatingBtn').addEventListener('click', function() {
+        // === Category and Subcategory Filter ===
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const cashewBtn = document.getElementById('cashewBtn');
+        const cashewSubmenu = document.getElementById('cashewSubmenu');
+        const productGrid = document.querySelector('.product-grid');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const category = button.getAttribute('data-category');
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                if (category === 'cashew') {
+                    cashewSubmenu.classList.toggle('active');
+                    productBoxes.forEach(box => {
+                        if (box.getAttribute('data-category') === 'cashew') {
+                            box.style.display = 'flex';
+                        } else {
+                            box.style.display = 'none';
+                        }
+                    });
+                    productGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+                } else {
+                    cashewSubmenu.classList.remove('active');
+                    productBoxes.forEach(box => {
+                        box.style.display = 'flex';
+                    });
+                    productGrid.style.gridTemplateColumns = 'repeat(5, 1fr)';
+                }
+            });
+        });
+
+        cashewSubmenu.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const subcategory = button.getAttribute('data-subcategory');
+                productBoxes.forEach(box => {
+                    if (box.getAttribute('data-subcategory') === subcategory) {
+                        box.style.display = 'flex';
+                    } else {
+                        box.style.display = 'none';
+                    }
+                });
+                productGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+                cashewSubmenu.classList.remove('active');
+            });
+        });
+
+        // Close submenu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!cashewBtn.contains(e.target) && !cashewSubmenu.contains(e.target)) {
+                cashewSubmenu.classList.remove('active');
+            }
+        });
+
+        // === Modal Functionality ===
+        document.getElementById('floatingBtn').addEventListener('click', () => {
             cartModal.style.display = 'flex';
             updateCartModal();
         });
 
-        // Close modal
         closeModal.addEventListener('click', () => {
             cartModal.style.display = 'none';
         });
 
-        // Close modal when clicking outside
-        cartModal.addEventListener('click', function(e) {
+        cartModal.addEventListener('click', (e) => {
             if (e.target === cartModal) {
                 cartModal.style.display = 'none';
             }
         });
 
-        // Initialize cart counter
+        // Initialize cart
         updateCartCounter();
     </script>
 </body>
